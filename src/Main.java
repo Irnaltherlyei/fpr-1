@@ -96,10 +96,8 @@ public class Main {
                     }
                 } catch (NumberFormatException exception) {
                     result.setText("No suitable matrix format.");
-                    return;
                 } catch (ArrayIndexOutOfBoundsException exception) {
                     result.setText("Wrong matrix dimensions.");
-                    return;
                 }
             }
         });
@@ -131,7 +129,7 @@ public class Main {
                 }
                 double x_1 = A[i][i];
                 double x_2 = A[i + j][i];
-                if(x_1 == 0 || x_2 == 0) continue; // SWAP OR SOMETHING
+                if(x_1 == 0 || x_2 == 0) continue;
                 double ratio = x_1 / x_2;
                 for(int k = 0; k < countVar + 1; k++){ // 0 1 2
                     A[i+j][k] =  A[i][k] - (A[i+j][k] * ratio);
