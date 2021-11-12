@@ -1,0 +1,21 @@
+Aufgabe 1:
+Da eine größerer Datentyp (long) auf einen kleineren Datentyp (int) gecastet wird entsteht Datenverlust, 
+sodass kein implizietes Casting möglich ist. Daher muss explizietes Casting verwendet werden:
+long l = (long)Math.pow(3, 22);
+int i = (int)l;
+Trotzdem entsteht immernoch ein Datenverlust, da ein int einen Wertebereich von -2.147.483.648 bis 2.147.483.647 hat.
+Sodass aus dem richtigen Ergebnis 31.381.059.609 aufgrund von Datenverlust 1.316.288.537 wird.
+
+Aufgabe 2:
+NAN = Keine Lösung.
+INFINITY = Unendliche viele Lösungen.
+
+Aufgabe 3:
+Siehe Javadoc
+
+Aufgabe 4:
+Bytecode wird durch den in der JDK vorhandenen Compiler generiert.
+	Bash: javac <Datei.java>
+Darauf kann man mittels JRE die entstandene Binärdatei <Datei.class> ausführen.
+	Bash: java Main[.class]
+Die Dateibezeichnung ist dabei optional.
