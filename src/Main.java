@@ -15,6 +15,8 @@ import javax.swing.*;
  * Class Constructor Main with simple main method.
  */
 public class Main {
+    private static JTextArea result; // public in class so all steps can be displayed at any time.
+    private static String steps = ""; // saves all steps;
     /**
      * Main
      * @param args normal args
@@ -59,8 +61,9 @@ public class Main {
 
         JButton calc = new JButton("calculate");
 
-        JTextArea result = new JTextArea();
+        result = new JTextArea();
         result.setEditable(false);
+        //JScrollPane scroll = new JScrollPane(result);
 
         calc.addActionListener(new ActionListener() {
             @Override
@@ -90,10 +93,7 @@ public class Main {
                         }
                     }
                     double[] res = solve(matrix);
-                    result.setText("");
-                    for(int k = 0; k < res.length; k++){
-                        result.append("x" + (k+1) + " = " + res[k] + "\n");
-                    }
+                    result.setText(steps);
                 } catch (NumberFormatException exception) {
                     result.setText("No suitable matrix format.");
                 } catch (ArrayIndexOutOfBoundsException exception) {
@@ -117,7 +117,7 @@ public class Main {
     /**
      * Method solve(double[][] A) solves a NxN matrix with the Gaussian Elimination Method.
      * @see #backTrack(double[][]) is called here.
-     * @param A as an NxN Matrix.
+     * @param A as an NxN matrix.
      * @return double[] which represents the vector with solved variables.
      */
     public static double[] solve(double[][] A){
@@ -135,13 +135,15 @@ public class Main {
                     A[i+j][k] =  A[i][k] - (A[i+j][k] * ratio);
                 }
             }
+            steps += "Step " + (i + 1) + ":\n";
+            saveStep(A);
         }
-        return backTrack(A);
+        return backTrack(diagonalForm(A));
     }
 
     /**
      * Creates the solved vector out of the Gaussian Elimination Method.
-     * @param A as a NxN Matrix.
+     * @param A as a NxN matrix.
      * @return double[] which represents the vector with solved variables.
      */
     public static double[] backTrack(double[][] A) {
@@ -154,6 +156,48 @@ public class Main {
             }
             res[i] = res[i] / A[i][i];
         }
+        steps += "Result:\n";
+        for (double x:res) {
+            steps += x + "\n";
+        }
         return res;
+    }
+
+    /**
+     * Converts matrix into a specific form so backtrack can solve it.
+     * Gets the maximum value for each row and column in reversed order.
+     * @param A as a NxN matrix.
+     * @return A as a NxN matrix.
+     */
+    public static double[][] diagonalForm(double[][] A){
+        int countVar = A.length;
+        for(int i = countVar - 1; i >= 0; i--) {
+            int maxIndex = i;
+            for (int j = countVar - 1; j >= 0; j--) {
+                if (Math.abs(A[j][i]) > Math.abs(A[maxIndex][i])) {
+                    maxIndex = j;
+                }
+            }
+            double[] temp = A[i];
+            A[i] = A[maxIndex];
+            A[maxIndex] = temp;
+        }
+        steps += "Diagonal form:\n";
+        saveStep(A);
+        return A;
+    }
+
+    /**
+     * Saves steps into a string to later be displayed.
+     * @param A as a NxN matrix.
+     */
+    public static void saveStep(double[][] A){
+        int countVar = A.length;
+        for(int i = 0; i < countVar; i++){
+            for(int j = 0; j < countVar + 1; j++){
+                steps += A[i][j] + " ";
+            }
+            steps += "\n";
+        }
     }
 }

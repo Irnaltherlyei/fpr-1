@@ -7,8 +7,9 @@ Trotzdem entsteht immernoch ein Datenverlust, da ein int einen Wertebereich von 
 Sodass aus dem richtigen Ergebnis 31.381.059.609 aufgrund von Datenverlust 1.316.288.537 wird.
 
 Aufgabe 2:
-NAN = Keine Lösung.
-INFINITY = Unendliche viele Lösungen.
+Für unendlich viele oder keine Lösungen wurde kein Handler implementiert.
+Falls nur NAN auftaucht hat die Matrix keine Lösung.
+Falls min. ein Infinity auftaucht unendlich viele.
 
 Aufgabe 3:
 Siehe Javadoc
